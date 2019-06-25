@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="kr.whenever.repo.mapper.QuestionMapper">
+	<resultMap id="questionResultMap" type="Question">
+		<id		property="id"		column="QUESTION_ID"/>
+		<result property="qid"		column="QUIZ_ID"/>
+		<result	property="uid"		column="USER_ID"/>
+		<result	property="content"	column="QUESTION_CONTENT"/>
+		<result property="regdate"	column="QUESTION_REGDATE"/>
+	</resultMap>
+	
+	<insert id="insertQuestion" parameterType="Question">
+		INSERT INTO W_QUESTION (
+			QUIZ_ID
+			,USER_ID
+			,QUESTION_CONTENT
+			)
+		VALUES (
+			#{qid}
+			,#{uid}
+			,#{content}
+		)
+	</insert>
+	
+	<update id="updateQuestion" parameterType="Question">
+		UPDATE W_QUESTION
+		SET
+			QUIZ_ID = #{qid}
+			,USER_ID = #{uid}
+			,QUESTION_CONTENT = #{content}
+		WHERE QUESTION_ID = #{id}
+	</update>
+	
+	<delete id="deleteQuestion" parameterType="Long">
+		DELETE 
+		FROM W_QUESTION
+		WHERE QUESTION_ID = #{id}
+	</delete>
+	
+	<select id="selectQuestion" parameterType="Long" resultMap="questionResultMap">
+		SELECT 
+			QUESTION_ID
+			,QUIZ_ID
+			,USER_ID
+			,QUESTION_CONTENT
+			,QUESTION_REGDATE
+		FROM W_QUESTION
+		WHERE QUESTION_ID = #{id}
+	</select>
+	
+	<select id="selectQuestions" resultMap="questionResultMap">
+		SELECT
+			QUESTION_ID
+			,QUIZ_ID
+			,USER_ID
+			,QUESTION_CONTENT
+			,QUESTION_REGDATE
+		FROM W_QUESTION
+	</select>
+</mapper>

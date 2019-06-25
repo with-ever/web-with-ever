@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="kr.whenever.repo.mapper.AnswerMapper">
+	<resultMap id="answerResultMap" type="Answer">
+		<id		property="id"		column="ANSWER_ID"/>
+		<result property="qid"		column="QUESTION_ID"/>
+		<result	property="aid"		column="ADMIN_ID"/>
+		<result	property="content"	column="ANSWER_CONTENT"/>
+		<result property="regdate"	column="ANSWER_REGDATE"/>
+	</resultMap>
+	
+	<insert id="insertAnswer" parameterType="Answer">
+		INSERT INTO W_ANSWER (
+			QUESTION_ID
+			,ADMIN_ID
+			,ANSWER_CONTENT
+			)
+		VALUES (
+			#{qid}
+			,#{uid}
+			,#{content}
+		)
+	</insert>
+	
+	<update id="updateAnswer" parameterType="Answer">
+		UPDATE W_ANSWER
+		SET
+			QUESTION_ID = #{qid}
+			,ADMIN_ID = #{uid}
+			,ANSWER_CONTENT = #{content}
+		WHERE ANSWER_ID = #{id}
+	</update>
+	
+	<delete id="deleteAnswer" parameterType="Long">
+		DELETE 
+		FROM W_ANSWER
+		WHERE ANSWER_ID = #{id}
+	</delete>
+	
+	<select id="selectAnswer" parameterType="Long" resultMap="answerResultMap">
+		SELECT 
+			ANSWER_ID
+			,QUESTION_ID
+			,ADMIN_ID
+			,ANSWER_CONTENT
+			,ANSWER_REGDATE
+		FROM W_ANSWER
+		WHERE ANSWER_ID = #{id}
+	</select>
+	
+	<select id="selectAnswers" resultMap="answerResultMap">
+		SELECT
+			ANSWER_ID
+			,QUESTION_ID
+			,ADMIN_ID
+			,ANSWER_CONTENT
+			,ANSWER_REGDATE
+		FROM W_ANSWER
+	</select>
+</mapper>
